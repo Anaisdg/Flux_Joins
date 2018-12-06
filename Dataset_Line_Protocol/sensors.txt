@@ -1,0 +1,15 @@
+# DDL
+CREATE DATABASE sensors
+
+# DML
+# CONTEXT-DATABASE: sensors
+
+Tc1,position=x1 temperature=50.5 1543507200000000000
+Tc1,position=x1 temperature=51.0 1543507245000000000
+Th1,position=x1 temperature=80.9 1543507200000000000
+Th1,position=x1 temperature=81.0 1543507245000000000                                                                  
+Tc2,position=x2 temperature=60.3 1543507400000000000
+Tc2,position=x2 temperature=59.3 1543507445000000000
+Th2,position=x2 temperature=70.2 1543507400000000000
+Th2,position=x2 temperature=71.6 1543507445000000000
+Th2,position=x2 temperature=71.6 1543507445000000000

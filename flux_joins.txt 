@@ -1,0 +1,33 @@
+Th1 = from(bucket: "sensors")
+  |> range(start: dashboardTime)
+  |> filter(fn: (r) => r._measurement == "Th1")
+  |> drop(columns:["_start", "_stop", "_measurement", "position"])
+
+
+ Th2 = from(bucket: "sensors")
+  |> range(start: dashboardTime)
+  |> filter(fn: (r) => r._measurement == "Th2")
+  |> drop(columns:["_start", "_stop", "_measurement", "position"])
+
+TH = join(tables: {Th1: Th1, Th2: Th2}, on: ["_time", "_field"])
+|> drop(columns:["_field"])
+
+Tc1 = from(bucket: "sensors")
+  |> range(start: dashboardTime)
+  |> filter(fn: (r) => r._measurement == "Tc1")
+  |> drop(columns:["_start", "_stop", "_measurement", "position"])
+
+
+Tc2 = from(bucket: "sensors")
+  |> range(start: dashboardTime)
+  |> filter(fn: (r) => r._measurement == "Tc2")
+  |> drop(columns:["_start", "_stop", "_measurement", "position"])
+
+ TC = join(tables: {Tc1: Tc1, Tc2: Tc2}, on: ["_time", "_field"])
+ |> drop(columns:["_field"])
+
+join(tables: {TC: TC, TH: TH}, on: ["_time"])
+
+|> map(fn: (r) => (r._value_Tc2 - r._value_Tc1)/(r._value_Th1 - r._value_Th2))
+
+|> yield(name: "efficiency")
